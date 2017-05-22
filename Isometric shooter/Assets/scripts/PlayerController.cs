@@ -7,8 +7,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-
+	public GameObject playerObject;
 	public float movmentSpeed = 0.1f;
+	public float sideStepSpeed = 1;
 
 	public GameObject bulletPrefab;
 	public float bulletSpeed = 20;
@@ -18,6 +19,10 @@ public class PlayerController : MonoBehaviour {
 
 	public KeyCode fireKey = KeyCode.Mouse0;
 	public KeyCode moveKey = KeyCode.Mouse1;
+
+	public GameObject targetPosition;
+
+
 
 	private Camera mainCamera;
 
@@ -29,24 +34,25 @@ public class PlayerController : MonoBehaviour {
 
 
 
-	void Update ()
-	{   
+	void Update (){
+
 		// fix the movment so it doesnt jump straight to position and mabey fix cameras
 		// also fix shooting 
-		if (Input.GetKeyDown (moveKey)) {
-			RaycastHit hit;
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out hit))
-			{
-				newPosition = hit.point;
-				transform.position = newPosition;
-		}
+
+//		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+
+//			playerObject.transform.position = Vector3.MoveTowards
+//			(playerObject.transform.position, targetPosition.transform.position, sideStepSpeed * Time.deltaTime);
+
+
+
+			
 
 		if (Input.GetKeyDown (fireKey)) {
 			GameObject GO = Instantiate (bulletPrefab, bulletSpawnPoint.position, Quaternion.identity) as GameObject;
 			GO.GetComponent<Rigidbody> ().AddForce (turret.transform.forward * bulletSpeed, ForceMode.Impulse);
+				
 		}
-
 
 		// for object to face the mouse position      
 		Ray cameraRay = mainCamera.ScreenPointToRay (Input.mousePosition);
@@ -58,9 +64,14 @@ public class PlayerController : MonoBehaviour {
 			Debug.DrawLine (cameraRay.origin, pointToLook, Color.blue);
 			transform.LookAt (new Vector3 (pointToLook.x, transform.position.y, pointToLook.z));
 		}
+	
+		playerObject.transform.position = Vector3.MoveTowards
+			(playerObject.transform.position, targetPosition.transform.position,
+				sideStepSpeed * Time.deltaTime);
 
-	}
- }
+
+
+  }
 }
 
 
