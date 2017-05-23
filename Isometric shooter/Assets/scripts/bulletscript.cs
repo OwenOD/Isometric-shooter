@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bulletscript : MonoBehaviour {
-
-	public int life;
-
+public class Bullet : MonoBehaviour {
+	public int damage = 25;
 	// Use this for initialization
 	void Start () {
-		Destroy (this.gameObject, life);
+		Destroy (this.gameObject, 4f);
+
+
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+//	void OnTriggerEnter(Collider other){
+//		Debug.Log ("OW");
+//
+//		if (other.tag == "Player") {
+//			other.GetComponent<Player> ().TakenDamage (damage);
+//		}
+//
+//		Destroy (this.gameObject); 
+//
+//	}
 }
