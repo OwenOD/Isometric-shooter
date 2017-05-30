@@ -14,15 +14,14 @@ public class Enemy : MonoBehaviour {
 
 	public void TakenDamage(int damageToTake){
 		health = health - damageToTake;
+
+		if (health <= 0) {
+			Destroy (this.gameObject);
+		}
 	}
-
-
 
 	void Start () {
 
-		if (health <= 0) {
-			return;
-		}
 
 		player = GameObject.FindGameObjectWithTag ("Player");
 		navAgent = GetComponent<NavMeshAgent> ();

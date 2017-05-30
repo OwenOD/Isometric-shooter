@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class bulletscript : MonoBehaviour {
-	public int damage = 6;
+	public int damage = 2;
 	// Use this for initialization
 	void Start () {
 		Destroy (this.gameObject, 4f);
@@ -15,7 +15,7 @@ public class bulletscript : MonoBehaviour {
 		Debug.Log ("OW");
 
 		if (other.tag == "Enemy") {
-			other.GetComponent<enemy> ().TakeDamage (damage);
+			other.GetComponent<Enemy> ().TakenDamage (damage);
 		}
 
 		Destroy (this.gameObject); 
