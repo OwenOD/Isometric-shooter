@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour {
 
 	private Camera mainCamera;
 
+	public float movmentSpeed = 2;
+
 	public float bulletSpeed = 20;
 	public GameObject bulletPrefab;
 	public Transform bulletSpawnPoint;
@@ -14,8 +16,6 @@ public class PlayerController : MonoBehaviour {
 	public GameObject turret;
 
 	public KeyCode fireKey = KeyCode.Mouse0;
-
-
 
 	NavMeshAgent agent;
 
@@ -25,28 +25,23 @@ public class PlayerController : MonoBehaviour {
 		mainCamera = FindObjectOfType<Camera> ();
 	}
 
-	public void MovePlayer(Vector3 newPosition){
+	public void MovePlayer(Vector3 newPosition) {
 		agent.SetDestination (newPosition);
 	}
 
 
 	void Update () {
 
-//		if (health <= 0) {
-//			Destroy (this.gameObject);
-//			return;
-//		}
+		Movment ();
 
 		Ray cameraRay = mainCamera.ScreenPointToRay (Input.mousePosition);
 		Plane groundPlane = new Plane (Vector3.up, Vector3.zero);
 		float rayLength;
-
+			
 		if (Input.GetKeyDown (fireKey)) {
 			GameObject GO = Instantiate (bulletPrefab, bulletSpawnPoint.position, Quaternion.identity) as GameObject;
 			GO.GetComponent<Rigidbody> ().AddForce (turret.transform.forward * bulletSpeed, ForceMode.Impulse);
 		}
-
-
 
 		if (groundPlane.Raycast (cameraRay, out rayLength)) {
 			Vector3 pointToLook = cameraRay.GetPoint (rayLength);
@@ -55,11 +50,22 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-//	void OnTriggerEnter(Collider other){
-//		Debug.Log ("OW");
-//
-//		if (other.tag == "Enemy") {
-//			Destroy (this.gameObject);
-//		}
-//    }
+	private void Movment () {
+		
+		if (Input.GetKey (KeyCode.W)) {
+			transform.position = transform.position + new Vector3 (0, 0, 0.1f) * movmentSpeed;
+		}
+
+		if (Input.GetKey (KeyCode.A)) {
+			transform.position = transform.position + new Vector3 (-0.1f, 0, 0) * movmentSpeed;
+		}
+
+		if (Input.GetKey (KeyCode.S)) {
+			transform.position = transform.position + new Vector3 (0, 0, -0.1f) * movmentSpeed;
+		}
+
+		if (Input.GetKey (KeyCode.D)) {
+			transform.position = transform.position + new Vector3 (0.1f, 0, 0) * movmentSpeed;
+		}
+	}
 }

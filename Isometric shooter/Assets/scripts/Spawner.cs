@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour
-{
+public class Spawner : MonoBehaviour {
+	
 	// Public Variables to Determine different Spawn Times
 	public GameObject[] enemies;
 	public Vector3 spawnValues;
@@ -15,33 +15,36 @@ public class Spawner : MonoBehaviour
 
 	int randEnemy;
 
-
-
 	// Use this for initialization
-	void Start ()
-	{
+	void Start () {
 		StartCoroutine(waitSpawner());
+//		SetActive = true;
 	}
 
 	// Update is called once per frame
-	void Update ()
-	{
+	void Update () {
 		spawnWait = Random.Range(spawnLeastWait, spawnMostWait);
 	}
 
-	IEnumerator waitSpawner()
-	{
-		yield return new WaitForSeconds(startWait);
+		IEnumerator waitSpawner() {
+			yield return new WaitForSeconds(startWait);
 
-		while (!stop)
-		{
-			randEnemy = Random.Range (0, 4);
+			while (!stop) {
 
-			Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), 1, Random.Range(-spawnValues.z, spawnValues.z));
+				randEnemy = Random.Range (0, 4);
 
-			Instantiate(enemies[randEnemy], spawnPosition + transform.TransformPoint(0, 0, 0), gameObject.transform.rotation);
+				Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), 1, Random.Range(-spawnValues.z, spawnValues.z));
 
-			yield return new WaitForSeconds(spawnWait);
+				Instantiate(enemies[randEnemy], spawnPosition + transform.TransformPoint(0, 0, 0), gameObject.transform.rotation);
+
+				yield return new WaitForSeconds(spawnWait);
+			}
 		}
 	}
-}
+
+
+
+
+
+
+	
